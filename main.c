@@ -1,9 +1,10 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-#define DELAY_TIME 7
-#define PATTERN_BREAK 10
+#define DELAY_TIME 15
+#define PATTERN_BREAK 0
 
 const uint8_t sine[] = {
   0b100000,
@@ -24,6 +25,17 @@ const uint8_t sine[] = {
   0b010000,
   0b010000,
   0b100000,
+};
+
+const uint8_t checker[] = {
+  0b101010,
+  0b101010,
+  0b010101,
+  0b010101,
+  0b101010,
+  0b101010,
+  0b010101,
+  0b010101,
 };
 
 const uint8_t ellery[] = {
@@ -57,16 +69,30 @@ const uint8_t ellery[] = {
   0b000000,
 };
 
-const uint8_t *patterns[] = { sine, ellery };
-const uint8_t patternLengths[] = { sizeof(sine), sizeof(ellery) };
+const uint8_t *patterns[] = { sine, checker, ellery };
+const uint8_t patternLengths[] = {
+  sizeof(sine),
+  sizeof(checker),
+  sizeof(ellery)
+};
 
-volatile uint8_t selection = 1;
+uint8_t buttonState = 0;
+uint8_t selection = 2;
 
 void setup() {
   // Set six pins to output
   DDRA = 0x3F;
+  // Set PINB3 as input
+  DDRB &= ~(1 << PINB3);
+}
 
-  sei();
+bool button() {
+  // debounce state
+  buttonState = buttonState << 1;
+  if (PINB & (1 << PINB3)) {
+    buttonState |= 1;
+  }
+  return (buttonState == 0x80);
 }
 
 void display(uint8_t byte) {
@@ -81,6 +107,9 @@ void loop() {
     display(pattern[i]);
     PORTA = 0;
     _delay_ms(PATTERN_BREAK);
+  }
+  if (button()) {
+    selection = (selection + 1) % sizeof(patternLengths);
   }
 }
 
