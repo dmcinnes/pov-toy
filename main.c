@@ -32,10 +32,6 @@ const uint8_t checker[] = {
   0b101010,
   0b010101,
   0b010101,
-  0b101010,
-  0b101010,
-  0b010101,
-  0b010101,
 };
 
 const uint8_t ellery[] = {
@@ -69,10 +65,19 @@ const uint8_t ellery[] = {
   0b000000,
 };
 
-const uint8_t *patterns[] = { sine, checker, ellery };
+const uint8_t diamond[] = {
+  0b001100,
+  0b010010,
+  0b100001,
+  0b010010,
+  0b001100,
+};
+
+const uint8_t *patterns[] = { sine, checker, diamond, ellery };
 const uint8_t patternLengths[] = {
   sizeof(sine),
   sizeof(checker),
+  sizeof(diamond),
   sizeof(ellery)
 };
 
