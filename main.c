@@ -69,6 +69,29 @@ const uint8_t boxen[] = {
   0b000000,
 };
 
+const uint8_t dance[] = {
+  0b110100,
+  0b001111,
+  0b110100,
+  0b000000,
+  0b000000,
+  0b011010,
+  0b001111,
+  0b110100,
+  0b000000,
+  0b000000,
+  0b110100,
+  0b001111,
+  0b110100,
+  0b000000,
+  0b000000,
+  0b110100,
+  0b001111,
+  0b011010,
+  0b000000,
+  0b000000,
+};
+
 const uint8_t ellery[] = {
   0b111111,
   0b100101,
@@ -100,12 +123,13 @@ const uint8_t ellery[] = {
   0b000000,
 };
 
-const uint8_t *patterns[] = { sine, checker, diamond, boxen, ellery };
+const uint8_t *patterns[] = { sine, checker, diamond, boxen, dance, ellery };
 const uint8_t patternLengths[] = {
   sizeof(sine),
   sizeof(checker),
   sizeof(diamond),
   sizeof(boxen),
+  sizeof(dance),
   sizeof(ellery)
 };
 
