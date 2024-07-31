@@ -82,19 +82,19 @@ const uint8_t patternLengths[] = {
 };
 
 uint8_t buttonState = 0;
-uint8_t selection = 2;
+uint8_t selection = 0;
 
 void setup() {
   // Set six pins to output
   DDRA = 0x3F;
-  // Set PINB3 as input
-  DDRB &= ~(1 << PINB3);
+  // Set PINB1 as input
+  DDRB &= ~(1 << PINB1);
 }
 
 bool button() {
   // debounce state
   buttonState = buttonState << 1;
-  if (PINB & (1 << PINB3)) {
+  if (PINB & (1 << PINB1)) {
     buttonState |= 1;
   }
   return (buttonState == 0x80);
